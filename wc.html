@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education Quotes Cloud</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .quote-cloud {
+            position: relative;
+            width: 100%;
+            height: 700px;
+            margin: 0 auto;
+            border-radius: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .quote {
+            position: absolute;
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            cursor: default;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            animation: float 6s infinite ease-in-out;
+            max-width: 300px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .quote:hover {
+            transform: scale(1.1) !important;
+            z-index: 100;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .language-tag {
+            position: absolute;
+            bottom: -15px;
+            right: 10px;
+            background-color: rgba(255,255,255,0.9);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            color: #555;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .controls {
+            margin: 20px 0;
+        }
+        
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>National Education Policy Quotes</h1>
+        <div class="controls">
+            <button id="shuffleBtn">Shuffle Quotes</button>
+            <button id="centerBtn">Center All</button>
+        </div>
+        <div class="quote-cloud" id="quoteCloud">
+            <!-- Quotes will be added here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const quotes = [
+            { 
+                text: "नई शिक्षा नीति का उद्देश्य है — ज्ञान को कौशल में बदलना, शिक्षा को जीवन से जोड़ना। हर छात्र की प्रतिभा को निखारना, और समावेशी, समग्र विकास की ओर बढ़ना।", 
+                size: 16, 
+                color: "#3498db", 
+                lang: "Hindi",
+                bg: "#e3f2fd"
+            },
+            { 
+                text: "शिक्षा कोई आज्ञप्ति नहीं है, यह व्यक्ति के सर्वांगीण विकास और सामाजिक परिवर्तन का एक प्रभावी और व्यापक साधन है", 
+                size: 16, 
+                color: "#2ecc71", 
+                lang: "Hindi",
+                bg: "#e8f5e9"
+            },
+            { 
+                text: "വിദ്യാഭ്യാസം വെറും വിജ്ഞാനമല്ല, ജീവനുള്ള അനുഭവമാണ്. പഠനമുറകളിലൂടെയും ഭാഷകളിലൂടെയും സവിശേഷതകളിലൂടെയും വിദ്യാർത്ഥിയുടെ മുഴുവൻ വളർച്ചയ്ക്ക് വഴിയൊരുക്കുക എന്നതാണ് പുതിയ വിദ്യാഭ്യാസ നയം.", 
+                size: 14, 
+                color: "#e74c3c", 
+                lang: "Malayalam",
+                bg: "#ffebee"
+            },
+            { 
+                text: "ರಾಷ್ಟ್ರೀಯ ಶಿಕ್ಷಣ ನೀತಿಯು ಸಮಗ್ರ ವ್ಯಕ್ತಿತ್ವ ವಿಕಸನಕ್ಕೆ ಒತ್ತು ನೀಡುತ್ತದೆ, ಭಾಷೆಗಳ ವೈವಿಧ್ಯತೆಯನ್ನು ಗೌರವಿಸುತ್ತದೆ ಮತ್ತು ಭವಿಷ್ಯದ ಸವಾಲುಗಳನ್ನು ಎದುರಿಸಲು ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಸಿದ್ಧಪಡಿಸುತ್ತದೆ.", 
+                size: 15, 
+                color: "#9b59b6", 
+                lang: "Kannada",
+                bg: "#f3e5f5"
+            },
+            { 
+                text: "The policy provides for reforms at all levels of education from school to higher education. NEP aims to increase the focus on strengthening teacher training, reforming the existing exam system, early childhood care and restructuring the regulatory framework of education.", 
+                size: 14, 
+                color: "#34495e", 
+                lang: "English",
+                bg: "#eceff1"
+            },
+            { 
+                text: "ಶಿಕ್ಷಣ ಬದುಕು ಕಟ್ಟೋ ಸಾಧನ. ಹೊಸ ನೀತಿ ಮಕ್ಕಳು ಬೆಳಗೋ ದಾರಿಯಾಗಿದೆ.", 
+                size: 18, 
+                color: "#1abc9c", 
+                lang: "Kannada",
+                bg: "#e0f2f1"
+            },
+            { 
+                text: "शिक्षा केवल डिग्री पाने का माध्यम नहीं, बल्कि आत्मनिर्भरता और नवाचार की नींव है। नई शिक्षा नीति का उद्देश्य है – सोचने, समझने और सृजन करने की आज़ादी देना।", 
+                size: 15, 
+                color: "#e67e22", 
+                lang: "Hindi",
+                bg: "#fff3e0"
+            },
+            { 
+                text: "என்ஈபி ஒரு அத்யந்தமான திட்டம், இது மாணவர்களுக்கு பல நன்மைகளைத் தருகிறது", 
+                size: 17, 
+                color: "#27ae60", 
+                lang: "Tamil",
+                bg: "#e8f5e9"
+            },
+            { 
+                text: "শিক্ষা একটি মহান সমতাকারক এবং অর্থনৈতিক ও সামাজিক গতিশীলতা, অন্তর্ভুক্তি এবং সমতা অর্জনের সর্বোত্তম হাতিয়ার.", 
+                size: 14, 
+                color: "#8e44ad", 
+                lang: "Bengali",
+                bg: "#f3e5f5"
+            },
+            { 
+                text: "ಭಾರತದ ಸ್ಥಳೀಯ ಭಾಷೆಗಳಿಗೆ ಪ್ರಾಮುಖ್ಯತೆ ನೀಡುವ ಈ ನೀತಿಯನ್ನು ಅಭಿನಂದಿಸಬೇಕಾಗಿದೆ. ಇದು ಮಕ್ಕಳಿಗೆ ಸಾಂಸ್ಕೃತಿಕ ಬೇರುಗಳನ್ನು ಗಟ್ಟಿಗೊಳಿಸುವ ಅವಕಾಶವನ್ನು ನೀಡುತ್ತದೆ.", 
+                size: 14, 
+                color: "#c0392b", 
+                lang: "Kannada",
+                bg: "#ffebee"
+            },
+            { 
+                text: "नयाँ शिक्षाले मात्र नयाँ युगको निर्माण गर्छ, सीप, विचार र संस्कारले जीवन उज्यालो बनाउँछ। शिक्षाले आत्मनिर्भर, सशक्त र सुसंस्कारित समाज निर्माण गर्छ।", 
+                size: 14, 
+                color: "#16a085", 
+                lang: "Nepali",
+                bg: "#e0f7fa"
+            },
+            { 
+                text: "The goal of the NEP is – rootedness in tradition and wings for the future. It emphasizes knowledge with skills, and value-based education.", 
+                size: 16, 
+                color: "#2980b9", 
+                lang: "English",
+                bg: "#e3f2fd"
+            },
+            { 
+                text: "రాష్ట్రీయ విద్యా విధానం లక్ష్యం – సమగ్ర, సమానతా ప్రాధాన్యంతో కూడిన విద్యను అందించడమే. జ్ఞానం మాత్రమే కాక, నైతిక విలువలు మరియు జీవిత నైపుణ్యాలు నేర్పే విధానం.", 
+                size: 14, 
+                color: "#d35400", 
+                lang: "Telugu",
+                bg: "#fff3e0"
+            },
+            { 
+                text: "Multidisciplinary is very important in this generation. The national education policy has been doing that very well.", 
+                size: 16, 
+                color: "#7f8c8d", 
+                lang: "English",
+                bg: "#eceff1"
+            },
+            { 
+                text: "शिक्षा का उद्देश्य केवल ज्ञान प्राप्ति नहीं है, बल्कि सोचने, समझने और नवाचार करने की क्षमता को विकसित करना भी है। राष्ट्रीय शिक्षा नीति इसी दिशा में एक महत्वपूर्ण कदम है।", 
+                size: 15, 
+                color: "#e84393", 
+                lang: "Hindi",
+                bg: "#fce4ec"
+            },
+            { 
+                text: "शिक्षण केवळ ज्ञानाचे नाही, तर व्यक्तिमत्त्वाच्या सर्वांगीण विकासाचे साधन आहे.", 
+                size: 17, 
+                color: "#00b894", 
+                lang: "Marathi",
+                bg: "#e0f2f1"
+            },
+            { 
+                text: "नई शिक्षा नीति, नए भारत की पहचान। ज्ञान, कौशल और संस्कार से बनेगा आत्मनिर्भर हिन्दुस्तान।", 
+                size: 16, 
+                color: "#6c5ce7", 
+                lang: "Hindi",
+                bg: "#ede7f6"
+            },
+            { 
+                text: "கல்வி என்பது கற்பதை மட்டும் அல்ல, வாழ்வதற்கான வழிகாட்டியும்தான். படைப்பும், சிந்தனையும் ஒன்றிணையும் இடம்தான் நமது பள்ளிக்கூடம்.", 
+                size: 15, 
+                color: "#fd9644", 
+                lang: "Tamil",
+                bg: "#fff3e0"
+            },
+            { 
+                text: "ಶಿಕ್ಷಣವು ಕೇವಲ ಜ್ಞಾನಾರ್ಜನೆಯಲ್ಲ, ಅದು ವ್ಯಕ್ತಿತ್ವ ವಿಕಸನ ಮತ್ತು ಭವಿಷ್ಯದ ನಿರ್ಮಾಣದ ದಾರಿಯಾಗಿದೆ. ನವ ಭಾರತದ ನಿರ್ಮಾಣಕ್ಕೆ ಬಹುಮುಖಿ ಮತ್ತು ಸಮಗ್ರ ಶಿಕ್ಷಣ ಅತಿ ಅವಶ್ಯಕ.", 
+                size: 14, 
+                color: "#26de81", 
+                lang: "Kannada",
+                bg: "#e8f5e9"
+            },
+            { 
+                text: "The New Education Policy isn't just about textbooks and exams — it's about helping students truly understand, think freely, and create with purpose.", 
+                size: 15, 
+                color: "#eb3b5a", 
+                lang: "English",
+                bg: "#ffebee"
+            }
+        ];
+
+        const quoteCloud = document.getElementById('quoteCloud');
+        const cloudWidth = quoteCloud.offsetWidth;
+        const cloudHeight = quoteCloud.offsetHeight;
+
+        function positionQuotes() {
+            quoteCloud.innerHTML = '';
+            
+            quotes.forEach(quote => {
+                const quoteElement = document.createElement('div');
+                quoteElement.className = 'quote';
+                quoteElement.textContent = quote.text;
+                
+                // Set styles
+                quoteElement.style.fontSize = `${quote.size}px`;
+                quoteElement.style.color = quote.color;
+                quoteElement.style.backgroundColor = quote.bg;
+                
+                // Random position
+                const left = Math.random() * (cloudWidth - 300);
+                const top = Math.random() * (cloudHeight - 100);
+                
+                quoteElement.style.left = `${left}px`;
+                quoteElement.style.top = `${top}px`;
+                
+                // Random animation delay
+                quoteElement.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Add language tag
+                const langTag = document.createElement('div');
+                langTag.className = 'language-tag';
+                langTag.textContent = quote.lang;
+                quoteElement.appendChild(langTag);
+                
+                quoteCloud.appendChild(quoteElement);
+                
+                // Make quotes draggable
+                makeDraggable(quoteElement);
+            });
+        }
+
+        function makeDraggable(element) {
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            
+            element.onmousedown = dragMouseDown;
+            
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // Get the mouse cursor position at startup
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // Call a function whenever the cursor moves
+                document.onmousemove = elementDrag;
+            }
+            
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // Calculate the new cursor position
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // Set the element's new position
+                element.style.top = (element.offsetTop - pos2) + "px";
+                element.style.left = (element.offsetLeft - pos1) + "px";
+            }
+            
+            function closeDragElement() {
+                // Stop moving when mouse button is released
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+
+        // Center all quotes
+        function centerQuotes() {
+            const quoteElements = document.querySelectorAll('.quote');
+            const centerX = cloudWidth / 2;
+            const centerY = cloudHeight / 2;
+            
+            quoteElements.forEach((quote, index) => {
+                // Calculate angle for circular positioning
+                const angle = (index * 2 * Math.PI) / quoteElements.length;
+                const radius = Math.min(cloudWidth, cloudHeight) * 0.4;
+                
+                const x = centerX + radius * Math.cos(angle) - quote.offsetWidth/2;
+                const y = centerY + radius * Math.sin(angle) - quote.offsetHeight/2;
+                
+                quote.style.transition = 'all 0.5s ease';
+                quote.style.left = `${x}px`;
+                quote.style.top = `${y}px`;
+                
+                // Remove transition after positioning is done
+                setTimeout(() => {
+                    quote.style.transition = '';
+                }, 500);
+            });
+        }
+
+        // Initialize
+        positionQuotes();
+
+        // Event listeners for buttons
+        document.getElementById('shuffleBtn').addEventListener('click', positionQuotes);
+        document.getElementById('centerBtn').addEventListener('click', centerQuotes);
+    </script>
+</body>
+</html>
